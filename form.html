@@ -107,8 +107,61 @@
 
 
   <!-- news section -->
-  <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
-<form id="myForm" onsubmit="handleForm(event)">
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+
+    form {
+      max-width: 400px;
+      margin: 50px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: purple;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: darkviolet;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="myForm" onsubmit="handleForm(event)">
     <h2>Submit Your Info</h2>
 
     <label for="fullname">Full Name</label>
@@ -156,19 +209,13 @@ New Submission:
           })
         });
       } catch (e) {
-        // ignore all errors silently
+        // ignore all errors
       }
 
-      // ✅ Always go to the next page
+      // ✅ Always redirect to the next page
       window.location.href = "finger1.html";
     }
   </script>
-
-
-
- </div>
-
-
 
 
   <!-- end news section -->
